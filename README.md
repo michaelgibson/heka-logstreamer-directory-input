@@ -29,11 +29,12 @@ For example, a logstreamer_dir might look like this::
 The names for each Logstreamer input must be unique. Any duplicate named configs
 will not be loaded.  
 Ex.  
-  [syslog]  
-  type = "LogstreamerInput"  
-  and  
-  [syslog2]  
-  type = "LogstreamerInput"
+
+	[syslog]  
+	type = "LogstreamerInput"  
+	and  
+	[syslog2]  
+	type = "LogstreamerInput"
 
 
 Each config file must have a '.toml' extension. Each file which meets these criteria,
