@@ -4,7 +4,8 @@ Dynamic plugin loader for Heka's LogstreamerInput plugins
 
 Plugin Name: **LogstreamerDirectoryInput**
 
-The LogstreamerDirectoryInput is largely based on Heka's [ProcessDirectoryInput](https://hekad.readthedocs.io/en/latest/config/inputs/processdir.html) periodically scans a filesystem directory looking
+The LogstreamerDirectoryInput is largely based on Heka's [ProcessDirectoryInput](https://hekad.readthedocs.io/en/latest/config/inputs/processdir.html).  
+It periodically scans a filesystem directory looking
 for LogstreamerInput configuration files. The LogstreamerDirectoryInput will maintain
 a pool of running LogstreamerInputs based on the contents of this directory,
 refreshing the set of running inputs as needed with every rescan. This allows
