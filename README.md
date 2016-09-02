@@ -69,8 +69,8 @@ Example:
 	logstreamer_dir = "/usr/share/heka/logstreamers.d"
 	ticker_interval = 120
 
-  To Build
-  ========
+To Build
+========
 
   See [Building *hekad* with External Plugins](http://hekad.readthedocs.org/en/latest/installing.html#build-include-externals)
   for compiling in plugins.
