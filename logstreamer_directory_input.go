@@ -3,16 +3,16 @@ package logstreamer
 import (
 	"errors"
 	"fmt"
-	"os"
-	"path/filepath"
 	"github.com/bbangert/toml"
 	. "github.com/mozilla-services/heka/pipeline"
+	"os"
+	"path/filepath"
 )
 
 type LogstreamerEntry struct {
-	ir     InputRunner
-	maker  MutableMaker
-	config *LogstreamerInputConfig
+	ir       InputRunner
+	maker    MutableMaker
+	config   *LogstreamerInputConfig
 	fileName string
 }
 
@@ -32,7 +32,7 @@ type LogstreamerDirectoryInput struct {
 	// the Logstreamer directory.
 	specified map[string]*LogstreamerEntry
 	stopChan  chan bool
-	logDir   string
+	logDir    string
 	ir        InputRunner
 	h         PluginHelper
 	pConfig   *PipelineConfig
@@ -113,7 +113,7 @@ func (lsdi *LogstreamerDirectoryInput) Init(config interface{}) (err error) {
 // ConfigStruct implements the HasConfigStruct interface and sets defaults.
 func (lsdi *LogstreamerDirectoryInput) ConfigStruct() interface{} {
 	return &LogstreamerDirectoryInputConfig{
-		LogstreamerDir:     "logstreamers.d",
+		LogstreamerDir: "logstreamers.d",
 		TickerInterval: 300,
 	}
 }
@@ -162,7 +162,6 @@ func (lsdi *LogstreamerDirectoryInput) loadInputs() (err error) {
 		return
 	}
 
-
 	// Remove any running inputs that are no longer specified
 	for name, entry := range lsdi.inputs {
 		if _, ok := lsdi.specified[name]; !ok {
@@ -172,17 +171,15 @@ func (lsdi *LogstreamerDirectoryInput) loadInputs() (err error) {
 		}
 	}
 
-
 	// Iterate through the specified inputs and activate any that are new or
 	// have been modified.
 
 	for name, newEntry := range lsdi.specified {
 
-
 		//Check to see if duplicate input already exists with same name but different file location.
 		//If so, do not load it as it confuses the InputRunner
 		for runningInputName, runningInput := range lsdi.inputs {
-			if  newEntry.ir.Name() == runningInput.ir.Name() && newEntry.fileName != runningInput.fileName {
+			if newEntry.ir.Name() == runningInput.ir.Name() && newEntry.fileName != runningInput.fileName {
 				runningEntryInputName = runningInput.ir.Name()
 				dups = true
 				lsdi.pConfig.RemoveInputRunner(runningInput.ir)
@@ -274,8 +271,8 @@ func (lsdi *LogstreamerDirectoryInput) logDirWalkFunc(path string, info os.FileI
 
 func (lsdi *LogstreamerDirectoryInput) loadLogstreamerFile(path string) (*LogstreamerEntry, error) {
 	var (
-		err error
-	 	ok = false
+		err     error
+		ok      = false
 		section toml.Primitive
 	)
 
