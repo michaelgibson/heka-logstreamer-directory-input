@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/bbangert/toml"
 	. "github.com/mozilla-services/heka/pipeline"
+	"github.com/mozilla-services/heka/plugins/logstreamer"
 	"os"
 	"path/filepath"
 )
@@ -12,7 +13,7 @@ import (
 type LogstreamerEntry struct {
 	ir       InputRunner
 	maker    MutableMaker
-	config   *LogstreamerInputConfig
+	config   *logstreamer.LogstreamerInputConfig
 	fileName string
 }
 
@@ -40,7 +41,7 @@ type LogstreamerDirectoryInput struct {
 
 // Helper function for manually comparing structs since slice attributes mean
 // we can't use `==`.
-func (lsdi *LogstreamerDirectoryInput) Equals(runningEntry *LogstreamerInputConfig, otherEntry *LogstreamerInputConfig) bool {
+func (lsdi *LogstreamerDirectoryInput) Equals(runningEntry *logstreamer.LogstreamerInputConfig, otherEntry *logstreamer.LogstreamerInputConfig) bool {
 	if runningEntry.Hostname != otherEntry.Hostname {
 		return false
 	}
@@ -245,7 +246,7 @@ func (lsdi *LogstreamerDirectoryInput) logDirWalkFunc(path string, info os.FileI
 		if err != nil {
 			return nil, err
 		}
-		logstreamerInputConfig := config.(*LogstreamerInputConfig)
+		logstreamerInputConfig := config.(*logstreamer.LogstreamerInputConfig)
 		return logstreamerInputConfig, nil
 	}
 	config, err := prepConfig()
@@ -253,7 +254,7 @@ func (lsdi *LogstreamerDirectoryInput) logDirWalkFunc(path string, info os.FileI
 		lsdi.ir.LogError(fmt.Errorf("prepping config: %s", err.Error()))
 		return nil
 	}
-	entry.config = config.(*LogstreamerInputConfig)
+	entry.config = config.(*logstreamer.LogstreamerInputConfig)
 	entry.maker.SetPrepConfig(prepConfig)
 
 	runner, err := entry.maker.MakeRunner("")
